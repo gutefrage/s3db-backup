@@ -59,7 +59,8 @@ module S3db
     def mysql_params
       command_chain = []
       command_chain << "--user=#{config.db['username']}"
-      command_chain << "--password='#{config.db['password']}'" if config.db['password']
+      command_chain << "--login-path=#{config.db['login_path']}" if config.db['login_path']
+      command_chain << "--password='#{config.db['password']}'" if config.db['password'] && !config.db['login_path']
       command_chain << "--host=#{config.db['host']}" if config.db['host']
       command_chain << "--port=#{config.db['port']}" if config.db['port']
 

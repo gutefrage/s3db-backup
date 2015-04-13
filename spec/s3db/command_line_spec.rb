@@ -67,5 +67,20 @@ describe S3db::CommandLine do
         command_line.load_command(anything).should_not =~ /--password=/
       end
     end
+
+    describe "login_path given" do
+      before do
+        configurations = rails_configurations['test'].merge!({'login_path' => 'local'})
+        command_line.config.stub(:db => configurations)
+      end
+
+      it "includes login_path into the command" do
+        command_line.load_command(anything).should =~ /--login-path=local/
+      end
+
+      it "excludes password from the command" do
+        command_line.load_command(anything).should_not =~ /--password=/
+      end
+    end
   end
 end
